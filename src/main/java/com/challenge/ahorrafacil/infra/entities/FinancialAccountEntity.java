@@ -19,10 +19,10 @@ public class FinancialAccountEntity {
     @Column(name = "total_amount", nullable = false)
     private Double totalAmount;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = true, updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = true, updatable = true)
     private LocalDateTime updatedAt;
 
     public FinancialAccountEntity() {

@@ -4,6 +4,7 @@ import com.challenge.ahorrafacil.domain.models.Subscription;
 import com.challenge.ahorrafacil.domain.ports.in.SubscriptionUseCase;
 import com.challenge.ahorrafacil.domain.ports.out.SubscriptionRepositoryPort;
 
+import java.util.List;
 import java.util.Optional;
 
 public class CreateSubscriptionUseCaseImpl implements SubscriptionUseCase {
@@ -22,5 +23,10 @@ public class CreateSubscriptionUseCaseImpl implements SubscriptionUseCase {
     @Override
     public Optional<Subscription> deactivateSubscription(Long id) {
         return subscriptionRepositoryPort.deactivateSubscription(id);
+    }
+
+    @Override
+    public List<Subscription> getActiveSubscriptionsByClient(Long clientId) {
+        return subscriptionRepositoryPort.getActiveSubscriptionsByClient(clientId);
     }
 }

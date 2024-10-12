@@ -25,5 +25,9 @@ public class JpaProductRepositoryAdapter implements RetrieveProductsRepositoryPo
         return availabilities.stream().map(AvailabilityEntity::getProduct).map(ProductEntity::toDomainModel).collect(Collectors.toList());
     }
 
+    @Override
+    public Product findById(Long id) {
+        return jpaProductRepository.findById(id).map(ProductEntity::toDomainModel).orElse(null);
+    }
 
 }

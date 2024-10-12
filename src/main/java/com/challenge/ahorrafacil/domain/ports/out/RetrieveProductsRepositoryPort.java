@@ -7,4 +7,5 @@ import java.util.List;
 public interface RetrieveProductsRepositoryPort {
 
     List<Product> findByBranchId(Long branchId);
+    Product findById(Long id);
 }

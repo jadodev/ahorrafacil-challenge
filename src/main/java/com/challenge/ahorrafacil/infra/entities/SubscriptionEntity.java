@@ -12,7 +12,9 @@ public class SubscriptionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subscription_id")
     private Long subscriptionId;
+    @Column(name = "product_id", nullable = false)
     private Long productId;
+    @Column(name = "client_id", nullable = false)
     private Long clientId;
     @Column(name = "subscription_amount", nullable = false)
     private Double subscriptionAmount;

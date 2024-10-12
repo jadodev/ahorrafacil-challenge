@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ProductsByBranchUseCase {
     List<Product> findByBranchId(Long branchId);
+
+    Product findById(Long id);
 }

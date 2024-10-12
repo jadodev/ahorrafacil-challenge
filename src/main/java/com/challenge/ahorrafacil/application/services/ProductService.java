@@ -15,6 +15,10 @@ public class ProductService implements ProductsByBranchUseCase {
     }
 
     @Override
+    public Product findById(Long id) {
+        return productsByBranchUseCase.findById(id);
+    }
+    @Override
     public List<Product> findByBranchId(Long branchId) {
         return productsByBranchUseCase.findByBranchId(branchId);
     }

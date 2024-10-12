@@ -32,4 +32,9 @@ public class SubscriptionController {
         Optional<Subscription> updatedSubscription = subscriptionService.deactivateSubscription(id);
         return new ResponseEntity<>(updatedSubscription, HttpStatus.OK);
     }
+
+    @GetMapping("/{clientId}")
+    public ResponseEntity<?> getActiveSubscriptionsByClient(@PathVariable Long clientId) {
+        return new ResponseEntity<>(subscriptionService.getActiveSubscriptionsByClient(clientId), HttpStatus.OK);
+    }
 }

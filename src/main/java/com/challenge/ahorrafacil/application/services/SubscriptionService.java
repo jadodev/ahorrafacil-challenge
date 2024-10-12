@@ -7,6 +7,7 @@ import com.challenge.ahorrafacil.domain.ports.in.SubscriptionUseCase;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,6 +55,11 @@ public class SubscriptionService implements SubscriptionUseCase {
             throw new RuntimeException("Subscription not found for id: " + id);
         }
         return subscriptionOpt;
+    }
+
+    @Override
+    public List<Subscription> getActiveSubscriptionsByClient(Long clientId) {
+        return subscriptionUseCase.getActiveSubscriptionsByClient(clientId);
     }
 }
 

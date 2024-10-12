@@ -7,11 +7,15 @@ import jakarta.persistence.*;
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "product_id")
     private Long productId;
     private String name;
+    @Column(name = "product_type")
     private String productType;
     private String description;
+    @Column(name = "average_yield")
     private Double averageYield;
+    @Column(name = "minimum_amount")
     private Double minimumAmount;
 
     public ProductEntity() {

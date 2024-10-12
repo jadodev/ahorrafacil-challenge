@@ -17,6 +17,12 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> findById(@PathVariable Long id) {
+        Product result = productService.findById(id);
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("/{branchId}/products")
     public ResponseEntity<List<Product>> findByBranchId(@PathVariable Long branchId) {
         List<Product> result = productService.findByBranchId(branchId);

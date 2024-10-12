@@ -21,6 +21,8 @@ public class ClientController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Optional<Client>> updateClient(@PathVariable Long id, @RequestBody Client client) {
+        System.out.println(id);
+        System.out.println(client);
         return clientService.updateClient(id, client)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

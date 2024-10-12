@@ -20,5 +20,10 @@ public class ProductsByBranchUseCaseImpl implements ProductsByBranchUseCase {
         return retrieveProductsRepositoryPort.findByBranchId(branchId);
     }
 
+    @Override
+    public Product findById(Long id) {
+        return retrieveProductsRepositoryPort.findById(id);
+    }
+
 
 }
