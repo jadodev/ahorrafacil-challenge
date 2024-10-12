@@ -11,8 +11,8 @@ COPY . .
 RUN chmod +x ./gradlew
 
 # Construye la aplicación utilizando Gradle
-RUN ./gradlew build -x test
-
+# Construye la aplicación con un timeout más largo
+RUN ./gradlew build -x test --no-daemon --max-workers=1 --build-cache --stacktrace --info
 # Exponer el puerto en el que tu aplicación correrá
 EXPOSE 8080
 
