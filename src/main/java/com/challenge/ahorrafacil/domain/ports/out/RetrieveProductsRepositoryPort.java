@@ -8,4 +8,3 @@ public interface RetrieveProductsRepositoryPort {
 
     List<Product> findByBranchId(Long branchId);
 }
-
