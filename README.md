@@ -39,6 +39,8 @@ La capa más externa es la de infraestructura (infra), que es la más extensa en
 
 ![Descripción de la imagen](./Assets/hexagonal_architec.jpg)
 
+## Árbol de archivos
+
 ```
 /com/ahorrafacil
 │
