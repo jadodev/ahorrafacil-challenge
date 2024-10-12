@@ -110,7 +110,7 @@ La capa más externa es la de infraestructura (infra), que es la más extensa en
     └── DomainTests.java
 
 ```
-
+![The San Juan Mountains are beautiful!](/assets/images/san-juan-mountains.jpg "San Juan Mountains")
 
 
 
