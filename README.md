@@ -37,7 +37,7 @@ La capa más externa es la de infraestructura (infra), que es la más extensa en
 
 ## Arquitectura Hexagonal
 
-![Arquitectura en la nube](/Assets/hexagonal_architec.jpg")
+![Descripción de la imagen](./Assets/hexagonal_architec.jpg)
 
 ```
 /com/ahorrafacil
@@ -115,7 +115,8 @@ La capa más externa es la de infraestructura (infra), que es la más extensa en
 
 ## Arquitectura en la nube
 
-![Arquitectura en la nube](/Assets/arquitecture_diagram.jpg")
+![Descripción de la imagen](./Assets/arquitecture_diagram.jpg)
+
 
 
 
