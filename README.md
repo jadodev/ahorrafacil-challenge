@@ -35,9 +35,14 @@ Capa de infraestructura
 La capa más externa es la de infraestructura (infra), que es la más extensa en términos de componentes. Aquí se encuentran los controladores (controllers), entidades (entities), repositorios (repositories) y las configuraciones específicas del sistema. Una particularidad de esta capa es que también contiene los adaptadores, los cuales funcionan como puentes entre el proyecto y los sistemas externos, como bases de datos. Aunque en algunas implementaciones los adaptadores se sitúan en una capa más externa, en este caso se integran dentro de infraestructura, dado que su función principal es conectar con bases de datos, las cuales forman parte del ecosistema de infraestructura del proyecto.
 
 
-## Arquitectura Hexagonal
+>## Arquitectura Hexagonal
+>
+>
+>![Descripción de la imagen](./Assets/hexagonal_architec.jpg)
 
-![Arquitectura en la nube](/Assets/hexagonal_architec.jpg")
+>## Árbol de archivos
+>
+>
 
 ```
 /com/ahorrafacil
@@ -113,9 +118,10 @@ La capa más externa es la de infraestructura (infra), que es la más extensa en
 
 ```
 
-## Arquitectura en la nube
+>## Arquitectura en la nube
+>
+>![Descripción de la imagen](./Assets/arquitecture_diagram.jpg)
 
-![Arquitectura en la nube](/Assets/arquitecture_diagram.jpg")
 
 
 
