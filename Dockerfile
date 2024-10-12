@@ -7,6 +7,9 @@ WORKDIR /app
 # Copia los archivos del proyecto al contenedor
 COPY . .
 
+# Da permisos de ejecución a gradlew
+RUN chmod +x ./gradlew
+
 # Construye la aplicación utilizando Gradle
 RUN ./gradlew build -x test
 
