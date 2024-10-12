@@ -30,11 +30,39 @@ Esto desplegara la aplicación en el puerto 8080.
 │
 ├── /application
 │   ├── /services
-│   └── /usecases
+│   │   ├── BranchesService.java
+│   │   ├── FinancialAccountService.java
+│   │   ├── ProductService.java
+│   │   └── SubscriptionService.java
+│   ├── /usecases
+│   │   ├── CreateSubscriptionUseCaseImpl.java
+│   │   ├── FindClientUseCaseImplUseCaseImpl.java
+│   │   ├── GetFinancialAccountDetailsImpl.java
+│   │   ├── ProductsByBranchUseCaseImpl.java
+│   │   ├── RetrieveBranchesUseCaseImpl.java
+│   │   └── UpdateClientUseCaseImpl.java
 │
 ├── /domain
 │   ├── /model
-│   └── /ports
+│   │   ├── Branch.java
+│   │   ├── Client.java
+│   │   ├── FinancialAccount.java
+│   │   ├── Product.java
+│   │   └── Subscription.java
+│   ├── /ports
+│   │   ├── /in
+│   │   │   ├── FinancialAccountUseCase.java
+│   │   │   ├── FindUserByIdentificationUseCase.java
+│   │   │   ├── ProductsByBranchUseCase.java
+│   │   │   ├── RetrieveBranchesUseCase.java
+│   │   │   ├── SubscriptionUseCase.java
+│   │   │   └── UpdateClientUseCase.java
+│   │   └── /out
+│   │       ├── ClientRepositoryPort.java
+│   │       ├── FinancialAccountPort.java
+│   │       ├── RetrieveBranchesPort.java
+│   │       ├── RetrieveProductsRepositoryPort.java
+│   │       └── SubscriptionRepositoryPort.java
 │
 ├── /infra
 │   ├── /config
@@ -66,6 +94,9 @@ Esto desplegara la aplicación en el puerto 8080.
 │   │   └── JpaSubscriptionRepositoryAdapter.java
 │
 └── /test
+    ├── ApplicationTests.java
+    └── DomainTests.java
+
 ```
 
 
