@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 
 public class Subscription {
-    @JsonIgnore
     private Long id;
     private Long productId;
     private Long clientId;

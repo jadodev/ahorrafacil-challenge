@@ -27,8 +27,8 @@ public class SubscriptionController {
 
     }
 
-    @PutMapping("/deactivate/{id}")
-    public ResponseEntity<Optional<Subscription>> updateSubscriptionStatus(@PathVariable Long id, @RequestParam String status) {
+    @DeleteMapping("/deactivate/{id}")
+    public ResponseEntity<Optional<Subscription>> updateSubscriptionStatus(@PathVariable Long id) {
         Optional<Subscription> updatedSubscription = subscriptionService.deactivateSubscription(id);
         return new ResponseEntity<>(updatedSubscription, HttpStatus.OK);
     }
