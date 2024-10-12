@@ -36,9 +36,11 @@ La capa más externa es la de infraestructura (infra), que es la más extensa en
 
 
 >## Arquitectura Hexagonal
+>  Nótese los adaptadores como parte de la capa de infra
 >
 >
->![Descripción de la imagen](./Assets/hexagonal_architec.jpg)
+>
+>![Descripción de la imagen](./Assets/hexagonal_design.jpg)
 
 >## Árbol de archivos
 >
@@ -119,8 +121,9 @@ La capa más externa es la de infraestructura (infra), que es la más extensa en
 ```
 
 >## Arquitectura en la nube
+> De ser necesario y contar con más tiempo esta arquitecura se puede robustecer con un caché, SQS, etc.
 >
->![Descripción de la imagen](./Assets/arquitecture_diagram.jpg)
+>![Descripción de la imagen](./Assets/arquitectura_nube.jpg)
 
 
 
