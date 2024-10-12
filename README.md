@@ -37,6 +37,8 @@ La capa más externa es la de infraestructura (infra), que es la más extensa en
 
 ## Arquitectura Hexagonal
 
+![Arquitectura en la nube](/Assets/hexagonal_architec.jpg")
+
 ```
 /com/ahorrafacil
 │
@@ -110,7 +112,10 @@ La capa más externa es la de infraestructura (infra), que es la más extensa en
     └── DomainTests.java
 
 ```
-![The San Juan Mountains are beautiful!](/assets/images/san-juan-mountains.jpg "San Juan Mountains")
+
+## Arquitectura en la nube
+
+![Arquitectura en la nube](/Assets/arquitecture_diagram.jpg")
 
 
 
