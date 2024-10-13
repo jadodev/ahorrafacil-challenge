@@ -1,0 +1,176 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Crear dos instancias EC2 con Docker, una para el frontend de Next.js y otra para el backend de NestJS, y una tabla DynamoDB.
+
+Resources:
+  # Grupo de seguridad compartido para las instancias EC2
+  SharedSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "Permitir acceso HTTP, HTTPS y SSH desde cualquier IP"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: "0.0.0.0/0"
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: "0.0.0.0/0"
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: "0.0.0.0/0"
+        - IpProtocol: tcp
+          FromPort: 3000
+          ToPort: 3000
+          CidrIp: "0.0.0.0/0"
+        - IpProtocol: tcp
+          FromPort: 4002
+          ToPort: 4002
+          CidrIp: "0.0.0.0/0"
+
+  # Tabla DynamoDB para almacenar los datos de vehículos
+  VehiclesDynamoDBTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      TableName: "VehiclesTable"
+      AttributeDefinitions:
+        - AttributeName: "vehicleId"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "vehicleId"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      Tags:
+        - Key: Environment
+          Value: Production
+
+  # Definir el rol de IAM para acceso a DynamoDB y CloudWatch (opcional para logs)
+  DynamoDBAccessRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - "ec2.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess" # Política de acceso completo a DynamoDB
+        - "arn:aws:iam::aws:policy/CloudWatchFullAccess"     # Opcional: para ver logs en CloudWatch
+
+  # Crear un perfil de instancia para EC2 con el rol de IAM
+  EC2InstanceProfile:
+    Type: "AWS::IAM::InstanceProfile"
+    Properties:
+      Path: "/"
+      Roles:
+        - Ref: DynamoDBAccessRole
+
+  # Instancia EC2 para ejecutar la aplicación frontend de Next.js en Docker
+  FrontendInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: us-east-1a
+      ImageId: ami-0885b1f6bd170450c
+      InstanceType: t2.micro
+      SecurityGroups:
+        - Ref: SharedSecurityGroup
+      IamInstanceProfile:
+        Ref: EC2InstanceProfile
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          apt-get update -y
+          apt-get install -y docker.io git
+          systemctl start docker
+          systemctl enable docker
+          cd /home/ubuntu
+          git clone https://github.com/jadodev/ahorrafacil-frontend.git
+          cd testing
+          docker build -t nextjs-app .
+          docker run -d -p 3000:3000 nextjs-app
+      Tags:
+        - Key: Name
+          Value: FrontendInstance
+
+  # Instancia EC2 para ejecutar el backend de NestJS en Docker
+  BackendInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: us-east-1a
+      ImageId: ami-0885b1f6bd170450c
+      InstanceType: t2.micro
+      SecurityGroups:
+        - Ref: SharedSecurityGroup
+      IamInstanceProfile:
+        Ref: EC2InstanceProfile
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          # Actualizar la instancia e instalar Docker y Git
+          apt-get update -y
+          apt-get install -y docker.io git
+
+          # Iniciar y habilitar Docker
+          systemctl start docker
+          systemctl enable docker
+
+          # Clonar el repositorio del backend de NestJS
+          cd /home/ubuntu
+          git clone https://github.com/jadodev/ahorrafacil-challenge.git
+          cd apiNestjs-Testing-Architecture
+
+          # Crear el archivo .env con las variables de entorno para DynamoDB y Redis
+          echo "AWS_REGION=us-east-1" >> .env
+          echo "DYNAMODB_TABLE=VehiclesTable" >> .env
+
+          # Crear Dockerfile para la aplicación NestJS si no existe (opcional)
+          cat <<EOF > Dockerfile
+          FROM node:16-alpine
+          WORKDIR /hexagonal-architecture/hexagonal-architecture
+          COPY package*.json ./
+          RUN npm install
+          COPY . .
+          EXPOSE 4002
+          CMD ["npm", "run", "start:prod"]
+          EOF
+
+          # Construir la imagen Docker
+          docker build -t nestjs-backend .
+
+          # Ejecutar el contenedor en el puerto 4002
+          docker run --env-file .env -d -p 4002:4002 nestjs-backend
+      Tags:
+        - Key: Name
+          Value: BackendInstance
+
+Outputs:
+  FrontendInstanceId:
+    Description: ID de la instancia EC2 para el frontend de Next.js
+    Value: !Ref FrontendInstance
+
+  BackendInstanceId:
+    Description: ID de la instancia EC2 para el backend de NestJS
+    Value: !Ref BackendInstance
+
+  VehiclesDynamoDBTableName:
+    Description: Nombre de la tabla DynamoDB creada para vehículos
+    Value: !Ref VehiclesDynamoDBTable
+
+  FrontendInstancePublicIp:
+    Description: IP pública de la instancia EC2 para el frontend de Next.js
+    Value: !GetAtt FrontendInstance.PublicIp
+    Export:
+      Name: "FrontendInstancePublicIp"
+
+  BackendInstancePublicIp:
+    Description: IP pública de la instancia EC2 para el backend de NestJS
+    Value: !GetAtt BackendInstance.PublicIp
+    Export:
+      Name: "BackendInstancePublicIp"
