@@ -1,5 +1,7 @@
 package com.challenge.ahorrafacil.infra.config;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.challenge.ahorrafacil.application.services.*;
 import com.challenge.ahorrafacil.application.usecases.*;
 import com.challenge.ahorrafacil.domain.ports.out.*;
@@ -55,10 +57,14 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public SubscriptionService subscriptionService(SubscriptionRepositoryPort subscriptionRepositoryPort, FinancialAccountPort financialAccountPort) {
+    public SubscriptionService subscriptionService(
+            SubscriptionRepositoryPort subscriptionRepositoryPort,
+            FinancialAccountPort financialAccountPort,
+            AmazonDynamoDB amazonDynamoDB) {
         return new SubscriptionService(
                 new CreateSubscriptionUseCaseImpl(subscriptionRepositoryPort),
-                new GetFinancialAccountDetailsImpl(financialAccountPort)
+                new GetFinancialAccountDetailsImpl(financialAccountPort),
+                new TransactionHistoryService(new TransactionHistoryRepository(amazonDynamoDB))
         );
     }
 
